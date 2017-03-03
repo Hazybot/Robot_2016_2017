@@ -1,1 +1,1 @@
-sudo apt-get install gcc-avr avr-libc hostapd isc-dhcp-server
+sudo apt-get install gcc-avr avr-libc avrdude hostapd isc-dhcp-server
