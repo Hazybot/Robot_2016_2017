@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include <fuzzy_table.h>
 #include <PID_Beta6.h>
 
@@ -23,6 +25,19 @@ MotorWheel wheel3(3,2,4,5,&irq3);        // Pin3:PWM, Pin2:DIR, Pin4:PhaseA, Pin
 
 Omni3WD Omni(&wheel1,&wheel2,&wheel3);
 
+void advance(int miliseconds){
+	int i;
+	char* s = (char*) malloc(20 * sizeof(char));
+	Omni.setCarAdvance(300);
+	for(i = 1; i < miliseconds / 200; i++){
+		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+		Serial.print(s);
+		Omni.delayMS(200, false);
+	}
+	Omni.setCarSlow2Stop(200);
+	free(s);
+}
+
 void setup() {
   TCCR1B=TCCR1B&0xf8|0x01;    // Pin9,Pin10 PWM 31250Hz
   TCCR2B=TCCR2B&0xf8|0x01;    // Pin3,Pin11 PWM 31250Hz
@@ -32,17 +47,14 @@ void setup() {
   Serial.begin(19200);
   /*wheel3.runPWM(50, HIGH);
   wheel2.runPWM(50, LOW);*/
+
 }
 
+int aaa = 0;
+
 void loop() {
-
-  Omni.setCarAdvance(300);
-  while(1){
-     Serial.println(wheel1.getCurrPulse());
-     Serial.println(wheel2.getCurrPulse());
-     Serial.println(wheel3.getCurrPulse());
-     Serial.println();
-     Omni.delayMS(500, false);
-  }
-
+	if(aaa == 0){
+		advance(3000);
+		aaa++;
+	}	
 }

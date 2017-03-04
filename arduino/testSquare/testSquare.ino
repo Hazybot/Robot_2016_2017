@@ -29,7 +29,7 @@ void setup() {
 
   //
   Omni.PIDEnable(0.46,0.2,0,10);
-  Serial.begin(19200);
+  Serial.begin(9600);
   /*wheel3.runPWM(50, HIGH);
   wheel2.runPWM(50, LOW);*/
 }
@@ -37,12 +37,13 @@ void setup() {
 void loop() {
 
   Omni.setCarAdvance(300);
-  while(1){
-     Serial.println(wheel1.getCurrPulse());
-     Serial.println(wheel2.getCurrPulse());
-     Serial.println(wheel3.getCurrPulse());
-     Serial.println();
-     Omni.delayMS(500, false);
-  }
+  Omni.delayMS(2000, false);
+  Omni.setCarSlow2Stop(500);
+  Omni.delayMS(500, false);
+  
+  Omni.setCarRotateLeft(300);
+  Omni.delayMS(550, false);
+  Omni.setCarSlow2Stop(200);
+  Omni.delayMS(500, false);
 
 }
