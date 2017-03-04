@@ -1,0 +1,1 @@
+sudo apt-get install gcc-avr avr-libc avrdude xvfb hostapd isc-dhcp-server openjdk-8-jre ant

@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #include <fuzzy_table.h>
 #include <PID_Beta6.h>
 
@@ -11,9 +9,6 @@
 
 #include <SONAR.h>
 #include <EEPROM.h>
-
-void setup();
-void loop();
 
 // Motors
 
@@ -40,14 +35,6 @@ void setup() {
 }
 
 void loop() {
-  //Omni.PIDRegulate();
-  /*Omni.setCarLeft(0);
-  Omni.setCarSpeedMMPS(500,1000);
-  Omni.delayMS(1000,true);
-  Omni.setCarStop();
-  delay(10000);*/
-
-  //Omni.demoActions(300,5000,1000,false);
 
   Omni.setCarAdvance(300);
   Serial.println(wheel1.getCurrPulse());
@@ -59,39 +46,4 @@ void loop() {
 
   Serial.println(wheel1.getCurrPulse());
 
-  /*Omni.setCarRight(300);
-  Omni.setCarSpeedMMPS(300, 1000);
-  Omni.delayMS(2000, false);
-  Omni.setCarSlow2Stop(1000);*/
-
-  /*Omni.setCarAdvance(0);
-  Omni.setCarSpeedMMPS(100, 1000);
-  Omni.delayMS(500, false);
-  Omni.setCarSlow2Stop(500);
-  Omni.delayMS(5000, false);*/
-
-  /*int i;
-
-  for(i = 0; i < 300; i+=10){
-
-    wheel2.setSpeedMMPS(i, HIGH);
-    wheel3.setSpeedMMPS(i, LOW);
-    Omni.delayMS(50, false);
-  }
-
-  Omni.delayMS(2000, false);
-  
-  for(i = 300; i > 0; i-=10){
-
-    wheel2.setSpeedMMPS(i, HIGH);
-    wheel3.setSpeedMMPS(i, LOW);
-    Omni.delayMS(50, false);
-  }
-
-  Omni.delayMS(2000, false);*/
-  
-  /*Omni.setCarSpeedMMPS(300, 1000);
-  Omni.delayMS(1000, false);*/
-
-  
 }
