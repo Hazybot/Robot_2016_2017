@@ -15,18 +15,16 @@ e
 
 #define TAMPON_MOYENNE 5
 
-void moyenneImage(IplImage imageMoyenne,IplImage imageActuel){
+void moyenneImage(cv::Mat imageMoyenne,cv::Mat imageActuel,int taille){
     int index = 0;
-    uchar *p;
-    uchar *c;
+    uchar *p = imageActuel.ptr();
+    uchar *c = imageMoyenne.ptr();
     for(index = 0 ; index < imageMoyenne.imageSize ; index++){
-        p = cvPtr2D(imageMoyenne,index/imageMoyenne.height,index%imageMoyenne.height,NULL);
-        c = cvPtr2D(imageActuel,index/imageActuel.height,index%imageActuel.height,NULL);
-        *p = ((*p)*TAMPON_MOYENNE-1+*c)/TAMPON_MOYENNE;
+        *p = ((*p+index)*TAMPON_MOYENNE-1+*(c+index))/TAMPON_MOYENNE;
     }
 }
 
-void moyenneImagePrecis(IplImage imageMoyenne,IplImage imageActuel, int debutLigne,int debutColonne){
+/*void moyenneImagePrecis(cv::Mat imageMoyenne,cv::Mat imageActuel,int taille,int debutLigne,int debutColonne){
     int index = 0;
     int x;
     int y;
@@ -35,9 +33,7 @@ void moyenneImagePrecis(IplImage imageMoyenne,IplImage imageActuel, int debutLig
     for(x = 0 ; x < imageMoyenne.width ; x++){
         for(y = 0 ; y < imageMoyenne.height ; y++){
             index = x*imageMoyenne.height+y;
-            p = cvPtr2D(imageMoyenne,index/imageMoyenne.height,index%imageMoyenne.height,NULL);
-            c = cvPtr2D(imageActuel,debutLigne+index/imageActuel.height,debutLigne+index%imageActuel.height,NULL);
-            *p = ((*p)*TAMPON_MOYENNE-1+*c)/TAMPON_MOYENNE;
+            *p = ((*p+index)*TAMPON_MOYENNE-1+*(c+index))/TAMPON_MOYENNE;
         }
     }
-}
+}*/
