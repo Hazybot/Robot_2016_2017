@@ -124,7 +124,7 @@ void loop() {
 			case 'v':
 				rotateToVertical();
 				break;
-			case 'f':
+			case 'a':
 				launchFunnyAction();
 				break;
 		}
