@@ -14,7 +14,7 @@ int posRotateServo = 0;
 void setup() {
   // put your setup code here, to run once:
   PinchServo.attach(7); // attaches the pinch servo on pin 7 to the servo object
-  RotateServo.attach(6); // attaches the rotate servo on pin 6 to the servo object
+  RotateServo.attach(5); // attaches the rotate servo on pin 6 to the servo object
 }
 
 void loop() {
