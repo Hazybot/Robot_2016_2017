@@ -5,6 +5,21 @@ int echo = 3;
 long lecture_echo;
 long cm;
 
+Servo PinchServo;
+Servo RotateServo; 
+// create servo objects to control a servo
+// a maximum of eight servo objects can be created
+
+int posPinchServo = 0;
+// variable to store the pinch servo position
+int posRotateServo = 0;
+// variable to store the rotate servo position
+
+Servo funnyActionServo;
+
+int posFunnyActServo = 0;
+
+
 void getDistanceAvant(){
   digitalWrite(trig, HIGH);
   delayMicroseconds(10);
@@ -59,12 +74,22 @@ void deposerCylindre(){
   ouverturePince();
 }
 
+void launchFunnyAction(){
+  funnyActionServo.write(90); 
+}
+
 
 void setup() {
   pinMode(trig, OUTPUT);
   digitalWrite(trig, LOW);
   pinMode(echo, INPUT);
   Serial.begin(9600);
+  
+  // put your setup code here, to run once:
+  PinchServo.attach(7); // attaches the pinch servo on pin 7 to the servo object
+  RotateServo.attach(6); // attaches the rotate servo on pin 6 to the servo object
+  
+  funnyActionServo.attach(11);
 }
 
 void loop() {
@@ -98,6 +123,9 @@ void loop() {
 				break;
 			case 'v':
 				rotateToVertical();
+				break;
+			case 'f':
+				launchFunnyAction();
 				break;
 		}
 	}
