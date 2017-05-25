@@ -24,8 +24,27 @@ int openArduino(int* arduino, int nb){
 		return -1;
 	}
 
-	arduino[MOTOR_ARDUINO] = tempArduino[0];
-
+	for(i = 0; i < nb; i++){
+		char* init = calloc(2, sizeof(char));
+		init[0] = 'i';
+		write_s(tempArduino[i], (uint8_t*) init, 1);
+		read(tempArduino[i], init, 1);
+		switch(init[0]){
+			case 'i':
+				arduino[INTERN_ARDUINO] = tempArduino[i];
+				#ifdef DEBUG
+					printf("Arduino moteur détecté\n");
+				#endif
+				break;
+			case 'e':
+				arduino[EXTERN_ARDUINO] = tempArduino[i];
+				#ifdef DEBUG
+					printf("Arduino capteur détecté\n");
+				#endif
+				break;
+		}
+		arduino[i] = tempArduino[i];
+	}
 	free(tempArduino);
 	return 0;
 }
