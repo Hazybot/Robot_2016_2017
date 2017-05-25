@@ -29,7 +29,7 @@ void loop() {
     Serial.println(s12.getTemp(),DEC);
     
     Serial.println(s13.getDist(),DEC);
-    Serial.println(s13.getDist(),DEC);
+    Serial.println(s13.getTemp(),DEC);
 
     delay(500);
 }
