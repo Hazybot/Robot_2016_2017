@@ -14,7 +14,8 @@
 #define STEP_MIN 5
 #define STEP_MAX 100 
 
-CvPoint binarisation(IplImage* image, int *nbPixels) ;
+CvPoint binarisation(IplImage* image, int *nbPixels);
+void getDirection(CvPoint reference, CvPoint barycentre);
 void addObjectToVideo(IplImage* image, CvPoint objectNextPos, int nbPixels);
 void getObjectColor(int event, int x, int y, int flags, void *param);
 
@@ -30,7 +31,7 @@ int main() {
     char key;
  
     int nbPixels;
-    CvPoint objectNextPos;
+    CvPoint barycentre;
  
     capture = cvCreateCameraCapture(CV_CAP_ANY);
  
@@ -56,10 +57,11 @@ int main() {
             continue;
  
         /*création du mask, reperage de l'objet et du barycentre, estimation de la prochaine position*/
-        objectNextPos = binarisation(image, &nbPixels);
-        /**/
+        barycentre = binarisation(image, &nbPixels);
+        /*affichage de la direction*/
+        getDirection(cvPoint(300, 250), barycentre);
         /*création du point sur le flux vidéo*/  
-        addObjectToVideo(image, objectNextPos, nbPixels);
+        addObjectToVideo(image, barycentre, nbPixels);
  
         key = cvWaitKey(10);
  
@@ -130,6 +132,18 @@ CvPoint binarisation(IplImage* image, int *nbPixels) {
     else
         return cvPoint(-1, -1);
 }
+
+void getDirection(CvPoint reference, CvPoint barycentre){
+    /*Si on a un barycentre, on calcul la distance et on affiche les distance en X et en Y*/
+    if(barycentre.x != -1 && barycentre.y != -1){
+        int distX = barycentre.x - reference.x;
+        int distY = barycentre.y - reference.y;
+
+        cvLine(image, barycentre, reference, CV_RGB(0,255,0));
+
+        printf("%d / %d\n", distX, distY);
+    }
+}   
  
 
 
@@ -170,15 +184,7 @@ void addObjectToVideo(IplImage* image, CvPoint objectNextPos, int nbPixels) {
         cvDrawCircle(image, objectPos, sqrt(nbPixels), CV_RGB(0, 0, 255), 3);
         /*Ecrit le nom*/
         cvInitFont(&font,CV_FONT_HERSHEY_SIMPLEX, 0.5, 0.5, 0, 1, 8);
-        int distX = objectPos.x - 300;
-        int distY = objectPos.y - 250;
-
         cvPutText(image, "distance", cvPoint(objectPos.x + 10, objectPos.y -10), &font, CV_RGB(255, 0, 0));
-        /*trajectoire position/nextPosition*/
-
-        printf("%d / %d\n", distX, distY);
-
-        cvLine(image, objectPos, cvPoint(300, 250), CV_RGB(0,255,0));
     }
  
     cvShowImage("fenetre flux", image);
