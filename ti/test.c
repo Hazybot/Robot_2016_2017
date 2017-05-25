@@ -9,8 +9,6 @@ int main(int argc, char** argv)
 		cvSet(image, CV_RGB(255,255,255), NULL);
 		image = cvQueryFrame(capture);
 
-
-
 		cvNamedWindow("this is HAZYBOT !!!!", CV_WINDOW_AUTOSIZE);
 
 		puts("Initialization complete !!");
