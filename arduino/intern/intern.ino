@@ -1,5 +1,3 @@
-#include <string.h>
-
 #include <fuzzy_table.h>
 #include <PID_Beta6.h>
 
@@ -25,28 +23,45 @@ MotorWheel wheel3(3,2,4,5,&irq3);        // Pin3:PWM, Pin2:DIR, Pin4:PhaseA, Pin
 
 Omni3WD Omni(&wheel1,&wheel2,&wheel3);
 
-int time = 0;
-
 void getPulses(){
 	char s[150];
 	sprintf(s, "#%ld-%ld-%ld!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
 	Serial.print(s);
 }
 
-void advance(){
+void forward(){
 	Omni.setCarAdvance(200);
 }
 
-void tourneGauche(){
+void turnLeft(){
 	Omni.setCarRotateLeft(200);
 }
 
-void tourneDroite(){
+void turnRight(){
 	Omni.setCarRotateRight(200);
 }
 
 void stop(){
 	Omni.setCarSlow2Stop(100);
+}
+
+void sonar(){
+
+	char tampon[25];
+
+	//Récupération des données des capteurs
+    s11.trigger();
+    s12.trigger();
+    s13.trigger();
+    
+    delay(SONAR::duration);
+    
+    //Affichage
+    
+    //s11.showDat();
+	
+	sprintf(tampon, "#%s:%s:%s!", s11.getDist(), s12.getDist(), s13.getDist());
+    Serial.print(tampon);
 }
 
 void setup() {
@@ -58,10 +73,43 @@ void setup() {
   Serial.begin(19200);
   /*wheel3.runPWM(50, HIGH);
   wheel2.runPWM(50, LOW);*/
-
-  advance(300);
 }
 
 void loop() {
+
+	if(Serial.available()){
+		char data = '\0';
+		int i = 0;
+		char car = '\0';
+		do{
+			car = Serial.read();
+			if(car != '#' && car != '!'){
+				data = car;
+			}
+		}while(Serial.available() && car != '!');
+
+		switch(data){
+			case 'i':
+				Serial.print("#i!");
+				break;
+			case 's':
+				stop();
+				break;
+			case 'f':
+				forward();
+				break;
+			case 'r':
+				turnRight();
+				break;
+			case 'l':
+				turnLeft();
+				break;
+			case 'u':
+				sonar();
+				break;
+		}
+	}
+	
+	delay(100);
 
 }
