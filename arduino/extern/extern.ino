@@ -5,6 +5,8 @@ int echo = 3;
 long lecture_echo;
 long cm;
 
+int tir = 9;
+
 Servo PinchServo;
 Servo RotateServo; 
 // create servo objects to control a servo
@@ -78,12 +80,19 @@ void launchFunnyAction(){
   funnyActionServo.write(90); 
 }
 
+void tirette(){
+	while(digitalRead(tir) == HIGH){
+		delay(30);
+	}
+}
+
 
 void setup() {
   pinMode(trig, OUTPUT);
   digitalWrite(trig, LOW);
   pinMode(echo, INPUT);
   Serial.begin(9600);
+  pinMode(tir, INPUT);
   
   // put your setup code here, to run once:
   PinchServo.attach(7); // attaches the pinch servo on pin 7 to the servo object
@@ -108,6 +117,9 @@ void loop() {
 		switch(data){
 			case 'i':
 				Serial.print("#e!");
+				break;
+			case 't':
+				tirette();
 				break;
 			case 'u':
 				getDistanceAvant();
