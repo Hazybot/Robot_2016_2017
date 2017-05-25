@@ -48,13 +48,9 @@ void setup() {
   /*wheel3.runPWM(50, HIGH);
   wheel2.runPWM(50, LOW);*/
 
+  advance(300);
 }
 
-int aaa = 0;
-
 void loop() {
-	if(aaa == 0){
-		advance(3000);
-		aaa++;
-	}	
+
 }

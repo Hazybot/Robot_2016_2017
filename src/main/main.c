@@ -13,6 +13,8 @@ int main(int argc, char** argv){
 		return test;
 	}
 
+	write(data->arduino[MOTOR_ARDUINO], "6000", 4);
+
 	closeArduino(data->arduino, NB_ARDUINO);
 	freeData(data);
 
