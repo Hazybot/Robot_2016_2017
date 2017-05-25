@@ -1,8 +1,8 @@
 #include <SONAR.h>
 
-
 SONAR s11=SONAR(0x11);
-//SONAR s12(0x12);
+SONAR s12=SONAR(0x12);
+SONAR s13=SONAR(0x13);
 
 void setup() {
     SONAR::init();
@@ -11,14 +11,26 @@ void setup() {
 }
 
 void loop() {
+  
+    //Récupération des données des capteurs
     s11.trigger();
-    //s12.trigger();
+    s12.trigger();
+    s13.trigger();
+    
     delay(SONAR::duration);
-    Serial.println(s11.getDist(),DEC);
+    
+    //Affichage
+    
     //s11.showDat();
-    //Serial.println(s12.getDist(),DEC);
-    //Serial.println(s11.getTemp(),DEC);
-    //Serial.println(s12.getTemp(),DEC);
+    Serial.println(s11.getDist(),DEC);
+    Serial.println(s11.getTemp(),DEC);
+    
+    Serial.println(s12.getDist(),DEC);
+    Serial.println(s12.getTemp(),DEC);
+    
+    Serial.println(s13.getDist(),DEC);
+    Serial.println(s13.getDist(),DEC);
+
     delay(500);
 }
 
