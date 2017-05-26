@@ -4,12 +4,10 @@
 #include "../data/Data.h"
 
 class ActionRobot {
-	
-	private:
-		bool finish;
 		
 	protected:
 		Data* data;
+		bool finish;
 	
 	public:
 		ActionRobot(Data* data);
