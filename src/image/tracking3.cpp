@@ -2,9 +2,13 @@
 #include "opencv/cv.h"
  
 #include <iostream>
+#include <sstream>
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+
+using namespace std;
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 #define min(a, b) ((a) < (b) ? (a) : (b))  
@@ -15,7 +19,7 @@
 #define STEP_MAX 100 
 
 CvPoint binarisation(IplImage* image, int *nbPixels);
-void getDirection(CvPoint reference, CvPoint barycentre);
+char* getDirection(CvPoint reference, CvPoint barycentre);
 void addObjectToVideo(IplImage* image, CvPoint objectNextPos, int nbPixels);
 void getObjectColor(int event, int x, int y, int flags, void *param);
 
@@ -59,7 +63,7 @@ int main() {
         /*création du mask, reperage de l'objet et du barycentre, estimation de la prochaine position*/
         barycentre = binarisation(image, &nbPixels);
         /*affichage de la direction*/
-        getDirection(cvPoint(300, 250), barycentre);
+        printf("%s\n", getDirection(cvPoint(300, 250), barycentre)); 
         /*création du point sur le flux vidéo*/  
         addObjectToVideo(image, barycentre, nbPixels);
  
@@ -133,7 +137,9 @@ CvPoint binarisation(IplImage* image, int *nbPixels) {
         return cvPoint(-1, -1);
 }
 
-void getDirection(CvPoint reference, CvPoint barycentre){
+char* getDirection(CvPoint reference, CvPoint barycentre){
+    char* result = NULL;
+
     /*Si on a un barycentre, on calcul la distance et on affiche les distance en X et en Y*/
     if(barycentre.x != -1 && barycentre.y != -1){
         int distX = barycentre.x - reference.x;
@@ -141,8 +147,21 @@ void getDirection(CvPoint reference, CvPoint barycentre){
 
         cvLine(image, barycentre, reference, CV_RGB(0,255,0));
 
-        printf("%d / %d\n", distX, distY);
+        /*convertion du resultat en char* */
+        stringstream strs;
+        strs << distX;
+        strs << ":";
+        strs << distY;
+        string temp_str = strs.str();
+        result = (char *)temp_str.c_str();
     }
+    else{
+        stringstream str2;
+        str2 << "error";
+        string temp_str2 = str2.str();
+        result = (char *)temp_str2.c_str();
+    }
+    return result;
 }   
  
 
