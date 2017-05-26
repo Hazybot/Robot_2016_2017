@@ -2,6 +2,7 @@
 #define ACTION_LIST
 
 #include "ActionRobot.h"
+#include "../serial/Serial.h"
 
 class ActionMove : public ActionRobot {
 	

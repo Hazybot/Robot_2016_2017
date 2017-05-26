@@ -119,6 +119,9 @@ void loop() {
 			case 'u':
 				sonar();
 				break;
+			case 'p':
+				getPulses();
+				break;
 		}
 	}
 	
