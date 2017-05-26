@@ -7,12 +7,12 @@ class ActionRobot {
 		
 	protected:
 		Data* data;
-		bool finish;
+		bool finished;
 	
 	public:
 		ActionRobot(Data* data);
 		virtual void perform() = 0;
-		bool isFinish();
+		bool isFinished();
 };
 
 #endif

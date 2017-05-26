@@ -11,3 +11,7 @@ void ActionTurn::perform(){
 void ActionPince::perform(){
 	
 }
+
+void ActionImage::perform(){
+	
+}
