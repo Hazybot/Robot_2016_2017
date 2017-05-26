@@ -37,6 +37,10 @@ void forward(){
 	Omni.setCarAdvance(200);
 }
 
+void backward(){
+	Omni.setCarBackoff(200);
+}
+
 void turnLeft(){
 	Omni.setCarRotateLeft(200);
 }
@@ -47,6 +51,7 @@ void turnRight(){
 
 void stop(){
 	Omni.setCarSlow2Stop(100);
+	Omni.delayMS(100);
 }
 
 void sonar(){
@@ -101,6 +106,9 @@ void loop() {
 				break;
 			case 'f':
 				forward();
+				break;
+			case 'b':
+				backward();
 				break;
 			case 'r':
 				turnRight();

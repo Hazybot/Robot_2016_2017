@@ -8,7 +8,7 @@ int cm;
 
 int INITIAL_FUNNY = 0;
 
-int tir = 9;
+int tir = A0;
 
 Servo PinchServo;
 Servo RotateServo; 
@@ -85,12 +85,10 @@ void launchFunnyAction(){
 }
 
 void tirette(){
-	fermeturePince();
-	while(digitalRead(tir) == HIGH){
+	while(analogRead(tir) > 950){
 		delay(30);
 	}
 	Serial.print("#a!");
-	ouverturePince();
 }
 
 
@@ -99,14 +97,15 @@ void setup() {
   digitalWrite(trig, LOW);
   pinMode(echo, INPUT);
   Serial.begin(9600);
-  pinMode(tir, INPUT);
+  //pinMode(tir, INPUT);
   
   // put your setup code here, to run once:
   PinchServo.attach(7); // attaches the pinch servo on pin 7 to the servo object
   RotateServo.attach(5); // attaches the rotate servo on pin 6 to the servo object
   
-  funnyActionServo.attach(11);
+   funnyActionServo.attach(11);
    funnyActionServo.write(INITIAL_FUNNY);
+   ouverturePince();
 }
 
 void loop() {
