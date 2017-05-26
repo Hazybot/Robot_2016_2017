@@ -60,14 +60,12 @@ void fermeturePince(){
 
 void rotateToHorizontal(){
   //Rotation d'un quart de tour (sens anti-horaire) -> position horizontale
-  delay(100);
   RotateServo.write(175);
   delay(100);
 }
 
 void rotateToVertical(){
   //Rotation d'un quart de tour -> position verticale
-  delay(100);
   RotateServo.write(84);
   delay(100);
 }
@@ -104,7 +102,7 @@ void setup() {
   
    funnyActionServo.attach(11);
    funnyActionServo.write(INITIAL_FUNNY);
-   ouverturePince();
+   fermeturePince();
 }
 
 void loop() {
