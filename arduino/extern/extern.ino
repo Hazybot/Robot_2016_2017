@@ -41,21 +41,23 @@ void getDistanceAvant(){
 void ouverturePince(){
   // ouverture de la pince
   // pour modifier la vitesse, il faut modifier le delay
-  for(posPinchServo = 180; posPinchServo > 59; posPinchServo -=1)
+  /*for(posPinchServo = 180; posPinchServo > 59; posPinchServo -=1)
   {
     PinchServo.write(posPinchServo);
     delay(8);
-  }
+  }*/
+  PinchServo.write(60);
 }
 
 void fermeturePince(){
   // fermeture de la pince
   // pour modifier la vitesse, il faut modifier le delay
-  for(posPinchServo = 60; posPinchServo <= 180; posPinchServo +=1)
+  /*for(posPinchServo = 60; posPinchServo <= 180; posPinchServo +=1)
   {
     PinchServo.write(posPinchServo);
     delay(8);
-  }
+  }*/
+  PinchServo.write(180);
 }
 
 void rotateToHorizontal(){
