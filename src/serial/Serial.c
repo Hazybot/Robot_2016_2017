@@ -1,6 +1,6 @@
 #include "Serial.h"
 
-int open_s(char *name){
+int open_s(char *name, int speed){
 
 	struct termios toptions ;
 	int fd;
@@ -26,8 +26,17 @@ int open_s(char *name){
 		return -1;
 	}
 
-	cfsetispeed(&toptions, B9600) ;
-	cfsetospeed(&toptions, B9600) ;
+	if(speed == 0){
+		 cfsetispeed(&toptions, B9600) ;
+        	cfsetospeed(&toptions, B9600) ;
+	}
+	else{
+		 cfsetispeed(&toptions, B19200) ;
+        	cfsetospeed(&toptions, B19200);
+	}
+
+	printf("NUM : %d\n", fd);
+
 	toptions.c_cflag &= ~PARENB ;
 	toptions.c_cflag &= ~CSTOPB ;
 	toptions.c_cflag &= ~CSIZE;
@@ -59,9 +68,10 @@ int close_s(int fd){
 int write_s(int fd, uint8_t *buffer, int nbyte){
 
 	#ifdef DEBUG
-		printf("Envoie de %s Ã  l'arduino %d\n", buffer, fd);
+		printf("Envoie de %s à l'arduino %d\n", buffer, fd);
 	#endif
 
+	tcflush(fd, TCIFLUSH);
 	int val=0;
 	val+= write(fd, "#", 1);
 	val+= write(fd, buffer, nbyte);

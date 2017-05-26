@@ -1,9 +1,12 @@
 #include <stdio.h>
+#include <Servo.h>
 
 int trig = 2;
 int echo = 3;
 long lecture_echo;
-long cm;
+int cm;
+
+int INITIAL_FUNNY = 0;
 
 int tir = 9;
 
@@ -30,7 +33,7 @@ void getDistanceAvant(){
   
   char tampon[25];
   cm = lecture_echo / 58;
-  sprintf(tampon,"#distAvant:%ld!",cm);
+  sprintf(tampon,"#%d!",cm);
   Serial.println(tampon);
   delay(10);
 }
@@ -78,12 +81,16 @@ void deposerCylindre(){
 
 void launchFunnyAction(){
   funnyActionServo.write(90); 
+  delay(1000);
 }
 
 void tirette(){
+	fermeturePince();
 	while(digitalRead(tir) == HIGH){
 		delay(30);
 	}
+	Serial.print("#a!");
+	ouverturePince();
 }
 
 
@@ -99,10 +106,10 @@ void setup() {
   RotateServo.attach(5); // attaches the rotate servo on pin 6 to the servo object
   
   funnyActionServo.attach(11);
+   funnyActionServo.write(INITIAL_FUNNY);
 }
 
 void loop() {
-
   if(Serial.available()){
 		char data = '\0';
 		int i = 0;
@@ -141,7 +148,12 @@ void loop() {
 				break;
 		}
 	}
-	
-	delay(100);
 
+	Serial.flush();	
+	delay(100);
+	/*delay(1000);
+	launchFunnyAction();
+	funnyActionServo.write(0);*/
 }
+
+

@@ -1,7 +1,7 @@
 EXE=../arduinoScript
 INO=extern.ino
-FLAGS=--board arduino:avr:diecimila:cpu=atmega328
-UPLOAD_FLAGS=--port /dev/ttyUSB0
+FLAGS=--board arduino:avr:uno
+UPLOAD_FLAGS=--port /dev/ttyACM0
 
 all: upload
 	
