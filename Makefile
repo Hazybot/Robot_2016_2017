@@ -1,8 +1,8 @@
-CC=gcc
+CC=g++
 CFLAGS=-Wall -g -DDEBUG
 EFLAGS=-lpthread -lm
 
-srcExt=.c
+srcExt=.cpp
 headerExt=.h
 
 launcher=test.out

@@ -1,9 +1,11 @@
 #include "SerialTraitment.h"
 
+using namespace std;
+
 int openArduino(int* arduino, int nb){
-	char* name = "/dev/ttyACM";
-	char* name2 = "/dev/ttyUSB";
-	int* tempArduino = calloc(nb, sizeof(int));
+	const char* name = string("/dev/ttyACM").c_str();
+	const char* name2 = string("/dev/ttyUSB").c_str();
+	int* tempArduino = (int*) calloc(nb, sizeof(int));
 	int i;
 	int success = 0;
 	for(i = 0; (i < 10) && (success < nb); i++){
@@ -37,7 +39,7 @@ int openArduino(int* arduino, int nb){
 	}
 
 	for(i = 0; i < nb; i++){
-		char* init = calloc(2, sizeof(char));
+		char* init = (char*) calloc(2, sizeof(char));
 		init[0] = 'i';
 		write_s(tempArduino[i], (uint8_t*) init, 1);
 		read_s(tempArduino[i], (uint8_t*) init, 1);
