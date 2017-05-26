@@ -10,8 +10,14 @@ int getSensorValue(Data* data){
 	return result;
 }
 
-int getPulseValues(Data* data){
-	
+int getDistanceValues(Data* data){
+	char buffer[150];
+	write_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) "p", 1);
+	read_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) buffer, 150);
+	char* correction = readCorrection(buffer);
+	int result = atoi(correction);
+	free(correction);
+	return result;
 }
 
 void ActionMove::perform(){

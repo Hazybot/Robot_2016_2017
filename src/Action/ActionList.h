@@ -5,7 +5,7 @@
 #include "../serial/Serial.h"
 
 int getSensorValue(Data* data);
-int getPulseValues(Data* data);
+int getDistanceValue(Data* data);
 
 class ActionMove : public ActionRobot {
 	
