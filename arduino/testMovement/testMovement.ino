@@ -27,26 +27,54 @@ Omni3WD Omni(&wheel1,&wheel2,&wheel3);
 
 int time = 0;
 
-void getPulses(){
-	char s[150];
-	sprintf(s, "#%ld-%ld-%ld!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
-	Serial.print(s);
-}
-
-void advance(){
+void advance(int miliseconds){
+	int i;
+	char* s = (char*) malloc(20 * sizeof(char));
 	Omni.setCarAdvance(200);
-}
-
-void tourneGauche(){
-	Omni.setCarRotateLeft(200);
-}
-
-void tourneDroite(){
-	Omni.setCarRotateRight(200);
-}
-
-void stop(){
+	for(i = 1; i < miliseconds / 200 && time < 90000; i++){
+		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+		Serial.print(s);
+		Omni.delayMS(200, false);
+                time += 200;
+	}
 	Omni.setCarSlow2Stop(100);
+        time+=200;
+	free(s);
+}
+
+void tourneGauche(int miliseconds){
+	int i;
+	char* s = (char*) malloc(20 * sizeof(char));
+	Omni.setCarRotateLeft(200);
+	for(i = 1; i < miliseconds / 200; i++){
+		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+		Serial.print(s);
+		Omni.delayMS(200, false);
+                time += 200;
+	}
+	Omni.setCarSlow2Stop(100);
+        time += 200;
+	free(s);
+}
+
+void tourneDroite(int miliseconds){
+	int i;
+	char* s = (char*) malloc(20 * sizeof(char));
+        Omni.setCarRotateRight(200);
+	for(i = 1; i < miliseconds / 200; i++){
+		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+		Serial.print(s);
+		Omni.delayMS(200, false);
+                time += 200;
+	}
+	Omni.setCarSlow2Stop(100);
+        time += 200;
+	free(s);
+}
+
+void defaultMouvement(){
+    avance(5000);
+    tourneGauche(83000); 
 }
 
 void setup() {
