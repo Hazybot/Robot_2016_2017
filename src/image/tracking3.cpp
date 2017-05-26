@@ -18,6 +18,11 @@ using namespace std;
 #define STEP_MIN 5
 #define STEP_MAX 100 
 
+struct struct_carre{
+	CvPoint topLeft;
+	CvPoint bottomRight;
+} carre;
+
 CvPoint binarisation(IplImage* image, int *nbPixels);
 char* getDirection(CvPoint reference, CvPoint barycentre);
 void addObjectToVideo(IplImage* image, CvPoint objectNextPos, int nbPixels);
@@ -203,8 +208,11 @@ void addObjectToVideo(IplImage* image, CvPoint objectNextPos, int nbPixels) {
         cvDrawCircle(image, objectPos, sqrt(nbPixels), CV_RGB(255, 0, 0), 3);
         /*Trace un carre*/
         int epsilon = 85;
+	struct struct_carre encadrement;
         CvPoint topLeft = cvPoint(objectPos.x - ((sqrt(nbPixels)+epsilon)/2), objectPos.y - ((sqrt(nbPixels)+epsilon)/2));
         CvPoint buttomRight = cvPoint(objectPos.x + ((sqrt(nbPixels)+epsilon)/2), objectPos.y + ((sqrt(nbPixels)+epsilon)/2));
+	encadrement.topLeft = topLeft;
+	encadrement.bottomRight = buttomRight;
         cvRectangle(image, topLeft, buttomRight, CV_RGB(0, 0, 255), 3);
         /*Ecrit le nom*/
         cvInitFont(&font,CV_FONT_HERSHEY_SIMPLEX, 0.5, 0.5, 0, 1, 8);
@@ -242,3 +250,5 @@ void getObjectColor(int event, int x, int y, int flags, void *param) {
     }
  
 }
+
+void select

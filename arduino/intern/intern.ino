@@ -10,6 +10,10 @@
 #include <SONAR.h>
 #include <EEPROM.h>
 
+SONAR s11=SONAR(0x11);
+SONAR s12=SONAR(0x12);
+SONAR s13=SONAR(0x13);
+
 // Motors
 
 irqISR(irq1,isr1);
@@ -60,7 +64,7 @@ void sonar(){
     
     //s11.showDat();
 	
-	sprintf(tampon, "#%s:%s:%s!", s11.getDist(), s12.getDist(), s13.getDist());
+	sprintf(tampon, "#%x:%x:%x!", s11.getDist(), s12.getDist(), s13.getDist());
     Serial.print(tampon);
 }
 
@@ -73,10 +77,10 @@ void setup() {
   Serial.begin(19200);
   /*wheel3.runPWM(50, HIGH);
   wheel2.runPWM(50, LOW);*/
+  stop();
 }
 
 void loop() {
-
 	if(Serial.available()){
 		char data = '\0';
 		int i = 0;
@@ -110,6 +114,6 @@ void loop() {
 		}
 	}
 	
-	delay(100);
+	Omni.delayMS(100);
 
 }

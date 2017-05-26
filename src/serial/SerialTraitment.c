@@ -2,6 +2,7 @@
 
 int openArduino(int* arduino, int nb){
 	char* name = "/dev/ttyACM";
+	char* name2 = "/dev/ttyUSB";
 	int* tempArduino = calloc(nb, sizeof(int));
 	int i;
 	int success = 0;
@@ -9,12 +10,23 @@ int openArduino(int* arduino, int nb){
 		int file;
 		char* port = (char*) calloc(strlen(name)+1, sizeof(char));
 		sprintf(port, "%s%d", name, i);
-		file = open_s(port);
+		file = open_s(port, 0);
 		if(file != -1){
 			tempArduino[success] = file;
 			success++;
 		}
 		free(port);
+		
+			port = (char*) calloc(strlen(name2)+1, sizeof(char));
+                	sprintf(port, "%s%d", name2, i);
+                	file = open_s(port, 1);
+                	if(file != -1){
+                        	tempArduino[success] = file;
+                	        success++;
+        	        }
+	                free(port);
+
+
 	}
 
 	if(i >= 10){
@@ -28,22 +40,24 @@ int openArduino(int* arduino, int nb){
 		char* init = calloc(2, sizeof(char));
 		init[0] = 'i';
 		write_s(tempArduino[i], (uint8_t*) init, 1);
-		read(tempArduino[i], init, 1);
+		read_s(tempArduino[i], (uint8_t*) init, 1);
 		switch(init[0]){
 			case 'i':
 				arduino[INTERN_ARDUINO] = tempArduino[i];
 				#ifdef DEBUG
-					printf("Arduino moteur dÃ©tectÃ©\n");
+					printf("Arduino interne détecté\n");
 				#endif
 				break;
 			case 'e':
 				arduino[EXTERN_ARDUINO] = tempArduino[i];
 				#ifdef DEBUG
-					printf("Arduino capteur dÃ©tectÃ©\n");
+					printf("Arduino externe détecté\n");
 				#endif
 				break;
+			default:
+				printf("JHQSJKDHQSJKDH %c\n", init[0]);
 		}
-		arduino[i] = tempArduino[i];
+		//arduino[i] = tempArduino[i];
 	}
 	free(tempArduino);
 	return 0;

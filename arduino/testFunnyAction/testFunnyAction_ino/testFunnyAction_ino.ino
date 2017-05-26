@@ -9,9 +9,10 @@ void setup(){
 }
 
 void loop() {
-delay(500);
+  
+delay(900000);
 launchFunnyAction();
-delay(500);
+
 }
 
 void launchFunnyAction(){
