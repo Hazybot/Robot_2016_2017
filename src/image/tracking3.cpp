@@ -250,5 +250,3 @@ void getObjectColor(int event, int x, int y, int flags, void *param) {
     }
  
 }
-
-void select
