@@ -32,12 +32,15 @@ int main() {
  
     int nbPixels;
     CvPoint barycentre;
+
+    CvPoint topCorner = cvPoint(0, 0);
+    CvPoint buttomCorner = cvPoint(640, 480);
  
     capture = cvCreateCameraCapture(CV_CAP_ANY);
  
-        if (!capture) {
+    if (!capture) {
         printf("ERREUR ! impossible d'ouvrir le flux video\n");
-            return -1;
+        return -1;
     }
  
     cvNamedWindow("fenetre flux", CV_WINDOW_AUTOSIZE);
@@ -55,7 +58,10 @@ int main() {
  
         if(!image)
             continue;
- 
+
+        if(barycentre.x == -1 && barycentre.y == -1){
+
+        }
         /*création du mask, reperage de l'objet et du barycentre, estimation de la prochaine position*/
         barycentre = binarisation(image, &nbPixels);
         /*affichage de la direction*/
@@ -212,6 +218,7 @@ void getObjectColor(int event, int x, int y, int flags, void *param) {
         
         /*on récupère les données du pixel selectionné*/
         pixel = cvGet2D(hsv, y, x);
+        printf("(%d/%d)\n", x, y);
         
         /*on met a jour nos donné hsv*/
         h = (int)pixel.val[0];
