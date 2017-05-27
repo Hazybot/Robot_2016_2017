@@ -10,14 +10,18 @@ int getDistanceValue(Data* data);
 class ActionMove : public ActionRobot {
 	
 	private:
+		bool firstTime;
 		double distance;
 		int direction;
+		int initPulse;
 	
 	public:
 		//distance in centimeter, direction positive for forward, negative for backward
 		ActionMove(Data* data, double distance, int direction): ActionRobot(data){
 			this->distance = distance;
 			this->direction = direction;
+			this->firstTime = true;
+			this->initPulse = 0;
 		}
 		void perform();
 };
