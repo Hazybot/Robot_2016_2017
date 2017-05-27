@@ -76,7 +76,7 @@ void getAngle(){
 
 void getPulses(){
 	char s[150];
-	sprintf(s, "#%ld-%ld-%ld!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+	sprintf(s, "#%d-%d-%d!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
 	Serial.print(s);
 }
 

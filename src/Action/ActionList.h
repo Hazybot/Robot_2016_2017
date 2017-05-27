@@ -4,6 +4,9 @@
 #include "ActionRobot.h"
 #include "../serial/Serial.h"
 
+int getSensorValue(Data* data);
+int getDistanceValue(Data* data);
+
 class ActionMove : public ActionRobot {
 	
 	private:

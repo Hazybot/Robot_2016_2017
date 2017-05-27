@@ -105,6 +105,6 @@ int read_s(int fd, uint8_t *buffer, int nbyte){
 	return 1;
 }
 
-char* readCorrection(uint8_t* buffer){
-	return strtok((char*) buffer, "!");
+char* readCorrection(char* buffer){
+	return strtok(buffer, "!");
 }
