@@ -10,7 +10,7 @@ int getSensorValue(Data* data){
 	return result;
 }
 
-int getDistanceValues(Data* data){
+int getDistanceValue(Data* data){
 	char buffer[150];
 	write_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) "p", 1);
 	read_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) buffer, 150);
@@ -21,7 +21,45 @@ int getDistanceValues(Data* data){
 }
 
 void ActionMove::perform(){
-	
+	if(firstTime){
+		this.initPulse = getDistanceValue(this->data);
+		if(direction == 1){
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "f", 1);
+		}
+		else if(direction == 0){
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
+		}
+		else{
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);	
+		}
+		firstTime = false;
+	}
+	else{
+		int obstacle = getSensorValue(this->data);
+		int currentPulse = getDistanceValue(this->data);
+		distanceAFaire = this.distance - (this.initPulse - currentPulse);
+		
+		if(obstacle < 20){
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);	
+		}
+		else{
+			if(distanceAFaire > 0){
+				if(direction == 1){
+					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "f", 1);
+				}
+				else if(direction == 0){
+					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
+				}
+				else{
+					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);	
+				}	
+			}
+			else{
+				write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+				this.finished = true;
+			}
+		}
+	}
 }
 
 void ActionTurn::perform(){
