@@ -12,8 +12,8 @@ int getSensorValue(Data* data){
 
 int getDistanceValue(Data* data){
 	char buffer[150];
-	write_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) "p", 1);
-	read_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) buffer, 150);
+	write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "p", 1);
+	read_s(data->arduino[INTERN_ARDUINO], (uint8_t*) buffer, 150);
 	char* correction = readCorrection(buffer);
 	int result = atoi(correction);
 	free(correction);
