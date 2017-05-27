@@ -11,6 +11,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#include <string>
+
 #include "../data/Data.h"
 #include "Serial.h"
 

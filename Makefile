@@ -1,8 +1,8 @@
-CC=gcc
+CC=g++
 CFLAGS=-Wall -g -DDEBUG
-EFLAGS=-lpthread -lm
+EFLAGS=-lpthread -lm `pkg-config --cflags opencv` `pkg-config --libs opencv`
 
-srcExt=.c
+srcExt=.cpp
 headerExt=.h
 
 launcher=test.out

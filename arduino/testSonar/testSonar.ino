@@ -5,6 +5,7 @@ SONAR s12=SONAR(0x12);
 SONAR s13=SONAR(0x13);
 
 void setup() {
+  Serial.begin(19200);
     SONAR::init();
     delay(100);
     //s11.setAddr(0x11); // Warning!! It will set hardware address of all connected SONAR sensors to the given value
@@ -20,17 +21,18 @@ void loop() {
     delay(SONAR::duration);
     
     //Affichage
+    s11.showDat();
     
     //s11.showDat();
     Serial.println(s11.getDist(),DEC);
-    Serial.println(s11.getTemp(),DEC);
+  /*  Serial.println(s11.getTemp(),DEC);
     
     Serial.println(s12.getDist(),DEC);
     Serial.println(s12.getTemp(),DEC);
     
     Serial.println(s13.getDist(),DEC);
     Serial.println(s13.getTemp(),DEC);
-
+*/
     delay(500);
 }
 

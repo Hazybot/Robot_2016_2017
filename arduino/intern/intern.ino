@@ -27,9 +27,56 @@ MotorWheel wheel3(3,2,4,5,&irq3);        // Pin3:PWM, Pin2:DIR, Pin4:PhaseA, Pin
 
 Omni3WD Omni(&wheel1,&wheel2,&wheel3);
 
+
+int pulse1 = 0;
+int pulse2 = 0;
+int pulse3 = 0;
+
+int calculDistanceAvance(int tilt){
+    return 80*tilt/350;
+}
+int calculDistanceRecule(int tilt){
+    return 80*tilt/350;
+}
+int calculDistanceTourne(int tilt){
+    return 80*tilt/350;
+}
+
+int mouvement(int tilt1,int tilt2,int tilt3){
+    int tiltAction1 = tilt1-pulse1;
+    int tiltAction2 = tilt2-pulse2;
+    int tiltAction3 = tilt3-pulse3;
+    int valeur;
+    if(tiltAction1 < 0 && tiltAction2 < 0 && tiltAction3 < 0 ){
+        valeur = calculDistanceTourne((tiltAction1 + tiltAction2 + tiltAction3)/3);
+    }
+    else if(tiltAction1 > 0 && tiltAction2 > 0 && tiltAction3 > 0 ){
+        valeur = calculDistanceTourne((tiltAction1 + tiltAction2 + tiltAction3)/3);
+    }
+    else if(tiltAction1 > 0 ){
+        valeur = calculDistanceAvance((tiltAction1+tiltAction2)/2);
+    }
+    else{
+        valeur = calculDistanceRecule((tiltAction1+tiltAction2)/2);
+    }
+    return valeur;
+}
+
+void getDistance(){
+    char s[150];
+    sprintf(s, "#%d!", mouvement(wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse()));
+    Serial.print(s);
+}
+
+void getAngle(){
+     char s[150];
+     sprintf(s, "#%d!", mouvement(wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse()));
+     Serial.print(s); 
+}
+
 void getPulses(){
 	char s[150];
-	sprintf(s, "#%ld-%ld-%ld!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+	sprintf(s, "#%d-%d-%d!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
 	Serial.print(s);
 }
 
@@ -118,6 +165,9 @@ void loop() {
 				break;
 			case 'u':
 				sonar();
+				break;
+			case 'p':
+				getPulses();
 				break;
 		}
 	}

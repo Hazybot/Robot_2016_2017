@@ -26,18 +26,35 @@ MotorWheel wheel3(3,2,4,5,&irq3);        // Pin3:PWM, Pin2:DIR, Pin4:PhaseA, Pin
 Omni3WD Omni(&wheel1,&wheel2,&wheel3);
 
 int time = 0;
+int aaa = 0;
+char lettre;
 
 void advance(int miliseconds){
 	int i;
 	char* s = (char*) malloc(20 * sizeof(char));
 	Omni.setCarAdvance(200);
 	for(i = 1; i < miliseconds / 200 && time < 90000; i++){
-		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
-		Serial.print(s);
 		Omni.delayMS(200, false);
                 time += 200;
 	}
-	Omni.setCarSlow2Stop(100);
+       	Omni.setCarStop();
+        sprintf(s, "%ld-%ld-%ld\n", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+        Serial.print(s);
+        time+=200;
+	free(s);
+}
+
+void recule(int miliseconds){
+	int i;
+	char* s = (char*) malloc(20 * sizeof(char));
+	Omni.setCarAdvance(200);
+	for(i = 1; i < miliseconds / 200 && time < 90000; i++){
+		Omni.delayMS(200, false);
+                time += 200;
+	}
+       	Omni.setCarStop();
+        sprintf(s, "%ld-%ld-%ld\n", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+        Serial.print(s);
         time+=200;
 	free(s);
 }
@@ -47,12 +64,12 @@ void tourneGauche(int miliseconds){
 	char* s = (char*) malloc(20 * sizeof(char));
 	Omni.setCarRotateLeft(200);
 	for(i = 1; i < miliseconds / 200; i++){
-		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
-		Serial.print(s);
 		Omni.delayMS(200, false);
                 time += 200;
 	}
-	Omni.setCarSlow2Stop(100);
+        Omni.setCarStop();
+        sprintf(s, "%ld-%ld-%ld\n", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+        Serial.print(s);
         time += 200;
 	free(s);
 }
@@ -62,20 +79,17 @@ void tourneDroite(int miliseconds){
 	char* s = (char*) malloc(20 * sizeof(char));
         Omni.setCarRotateRight(200);
 	for(i = 1; i < miliseconds / 200; i++){
-		sprintf(s, "%ld-%ld-%ld", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
-		Serial.print(s);
 		Omni.delayMS(200, false);
                 time += 200;
 	}
-	Omni.setCarSlow2Stop(100);
+	Omni.setCarStop();
+        sprintf(s, "%ld-%ld-%ld\n", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
+        Serial.print(s);
         time += 200;
 	free(s);
 }
 
-void defaultMouvement(){
-    avance(5000);
-    tourneGauche(83000); 
-}
+
 
 void setup() {
   TCCR1B=TCCR1B&0xf8|0x01;    // Pin9,Pin10 PWM 31250Hz
@@ -91,5 +105,38 @@ void setup() {
 }
 
 void loop() {
-
+  
+  if((lettre = Serial.read())!= -1){
+    if(lettre == 'a'){
+      aaa = 1;
+    }
+    if(lettre == 'r'){
+      aaa = 6;
+    }        
+    if(lettre == 'g'){
+      aaa = 10;
+    }
+    if(lettre == 'd'){
+      aaa = 15;
+    }
+    if(lettre == 'u'){
+       aaa = 0; 
+    }
+  }
+  if(0 <aaa && aaa < 4){
+     advance(aaa*500);
+     aaa++;
+  }
+  if(5 <aaa && aaa < 9){
+     recule((aaa-5)*500);
+     aaa++;
+  }
+    if(10 <aaa && aaa < 14){
+     tourneGauche((aaa-10)*500);
+     aaa++;
+  }
+    if(15 <aaa && aaa < 19){
+     tourneDroite((aaa-15)*500);
+     aaa++;
+  }
 }

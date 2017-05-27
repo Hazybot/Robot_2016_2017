@@ -1,7 +1,7 @@
 #include "loop.h"
 
 Timer* initTimer(int miliseconds){
-	Timer* timer = malloc(sizeof(Timer));
+	Timer* timer = (Timer*) malloc(sizeof(Timer));
 	timer->miliseconds = miliseconds-3000;
 	timer->rest = 0;
 	timer->end = false;

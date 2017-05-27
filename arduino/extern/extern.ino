@@ -41,34 +41,33 @@ void getDistanceAvant(){
 void ouverturePince(){
   // ouverture de la pince
   // pour modifier la vitesse, il faut modifier le delay
-  for(posPinchServo = 180; posPinchServo > 59; posPinchServo -=1)
+  /*for(posPinchServo = 180; posPinchServo > 59; posPinchServo -=1)
   {
     PinchServo.write(posPinchServo);
     delay(8);
-  }
+  }*/
+  PinchServo.write(60);
 }
 
 void fermeturePince(){
   // fermeture de la pince
   // pour modifier la vitesse, il faut modifier le delay
-  for(posPinchServo = 60; posPinchServo <= 180; posPinchServo +=1)
+  /*for(posPinchServo = 60; posPinchServo <= 180; posPinchServo +=1)
   {
     PinchServo.write(posPinchServo);
     delay(8);
-  }
+  }*/
+  PinchServo.write(180);
 }
 
 void rotateToHorizontal(){
-  for(posRotateServo = 180; posRotateServo = 89; posRotateServo -=1)
-  {
-    RotateServo.write(posPinchServo);
-    delay(8);
-  }
+  //Rotation d'un quart de tour (sens anti-horaire) -> position horizontale
+  RotateServo.write(175);
+  delay(100);
 }
 
 void rotateToVertical(){
   //Rotation d'un quart de tour -> position verticale
-  delay(100);
   RotateServo.write(84);
   delay(100);
 }
@@ -105,7 +104,7 @@ void setup() {
   
    funnyActionServo.attach(11);
    funnyActionServo.write(INITIAL_FUNNY);
-   ouverturePince();
+   fermeturePince();
 }
 
 void loop() {

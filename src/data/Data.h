@@ -11,16 +11,14 @@
 
 #define DELIM_CHAR ":"
 
-typedef enum ArduinoFunction ArduinoFunction;
-enum ArduinoFunction {INTERN_ARDUINO, EXTERN_ARDUINO};
+typedef enum ArduinoFunction {INTERN_ARDUINO, EXTERN_ARDUINO} ArduinoFunction;
 
-typedef struct Data Data;
-struct Data{
+typedef struct Data{
 	bool stopped;
 	int* arduino;
 	float* distances;
 	float* speeds;
-};
+} Data;
 
 Data* initialiseData();
 void freeData(Data* data);

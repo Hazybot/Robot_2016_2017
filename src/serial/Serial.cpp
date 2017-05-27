@@ -104,3 +104,7 @@ int read_s(int fd, uint8_t *buffer, int nbyte){
 	#endif
 	return 1;
 }
+
+char* readCorrection(char* buffer){
+	return strtok(buffer, "!");
+}
