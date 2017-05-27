@@ -59,11 +59,10 @@ void fermeturePince(){
 }
 
 void rotateToHorizontal(){
-  for(posRotateServo = 180; posRotateServo = 89; posRotateServo -=1)
-  {
-    RotateServo.write(posPinchServo);
-    delay(8);
-  }
+  //Rotation d'un quart de tour (sens anti-horaire) -> position horizontale
+  delay(100);
+  RotateServo.write(175);
+  delay(100);
 }
 
 void rotateToVertical(){
