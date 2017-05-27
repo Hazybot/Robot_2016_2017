@@ -10,6 +10,7 @@ int getDistanceValue(Data* data);
 class ActionMove : public ActionRobot {
 	
 	private:
+		int firstTime;
 		double distance;
 		int direction;
 	
