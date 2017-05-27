@@ -13,6 +13,7 @@ class ActionMove : public ActionRobot {
 		bool firstTime;
 		double distance;
 		int direction;
+		int initPulse;
 	
 	public:
 		//distance in centimeter, direction positive for forward, negative for backward
@@ -20,6 +21,7 @@ class ActionMove : public ActionRobot {
 			this->distance = distance;
 			this->direction = direction;
 			this->firstTime = true;
+			this->initPulse = 0;
 		}
 		void perform();
 };
