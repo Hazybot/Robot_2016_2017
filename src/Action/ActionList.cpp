@@ -30,7 +30,7 @@ void ActionMove::perform(){
 			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
 		}
 		else{
-			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);	
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
 		}
 		firstTime = false;
 	}
@@ -38,9 +38,9 @@ void ActionMove::perform(){
 		int obstacle = getSensorValue(this->data);
 		int currentPulse = getDistanceValue(this->data);
 		distanceAFaire = this.distance - (this.initPulse - currentPulse);
-		
+
 		if(obstacle < 20){
-			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);	
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
 		}
 		else{
 			if(distanceAFaire > 0){
@@ -51,8 +51,8 @@ void ActionMove::perform(){
 					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
 				}
 				else{
-					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);	
-				}	
+					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+				}
 			}
 			else{
 				write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
@@ -63,7 +63,39 @@ void ActionMove::perform(){
 }
 
 void ActionTurn::perform(){
-	
+    if(firtTime){
+        if(distance == 0){
+            write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
+        }
+        else if(distance == 1){
+            write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "r", 1);
+        }
+        else{
+            write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+        }
+        firstTime = false;
+    }
+    else{
+        if(getSensorValue(this->data) < 20){
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
+		}
+        else{
+            if(distance == 0){
+                if(degree-getDistanceValue() < 0){
+                    write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
+                }
+            )
+            else if(distance == 1){
+                if(degree-getDistanceValue() > 0){
+                    write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
+                }
+            }
+            else{
+                write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+            }
+            finished = 1;
+        }
+    }
 }
 
 void ActionPince::perform(){
@@ -76,5 +108,5 @@ void ActionPince::perform(){
 }
 
 void ActionImage::perform(){
-	
+
 }
