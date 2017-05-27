@@ -33,12 +33,15 @@ class ActionTurn : public ActionRobot {
 		bool firstTime;
 		double degree;
 		int direction;
+		int initPulse;
 	
 	public:
 		//degree in degree, direction positive for forward, negative for backward
 		ActionTurn(Data* data, double degree, int direction): ActionRobot(data){
 			this->degree = degree;
 			this->direction = direction;
+			this->firstTime = true;
+			this->initPulse = 0;
 		}
 		void perform();
 };

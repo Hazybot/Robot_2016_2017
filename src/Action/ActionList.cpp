@@ -40,7 +40,7 @@ void ActionMove::perform(){
 		int distanceAFaire = this->distance - (this->initPulse - currentPulse);
 
 		if(obstacle < 20){
-			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
+			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
 		}
 		else{
 			if(distanceAFaire > 0){
@@ -52,6 +52,7 @@ void ActionMove::perform(){
 				}
 				else{
 					write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+					finished = true;
 				}
 			}
 			else{
@@ -64,6 +65,7 @@ void ActionMove::perform(){
 
 void ActionTurn::perform(){
     if(firstTime){
+    	initPulse = getDistanceValue(this->data);
         if(direction == 0){
             write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
         }
@@ -76,24 +78,30 @@ void ActionTurn::perform(){
         firstTime = false;
     }
     else{
-        if(getSensorValue(this->data) < 20){
-			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
-		}
-        else{
-            if(direction == 0){
-                if(degree-getDistanceValue(this->data) < 0){
-                    write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
-                }
-            }
-            else if(direction == 1){
-                if(degree-getDistanceValue(this->data) > 0){
-                    write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
-                }
+    	int currentPulse = getDistanceValue(this->data);
+		int angleAFaire = this->degree - (this->initPulse - currentPulse);
+        
+        if(direction == 0){
+            if(angleAFaire < 0){
+                write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
             }
             else{
-                write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+            	write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+            	finished = true;
             }
-            finished = 1;
+        }
+        else if(direction == 1){
+            if(angleAFaire > 0){
+                write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "r", 1);
+            }
+            else{
+            	write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+            	finished = true;
+            }
+        }
+        else{
+            write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
+            finished = true;
         }
     }
 }
