@@ -10,23 +10,22 @@ int openArduino(int* arduino, int nb){
 	int success = 0;
 	for(i = 0; (i < 10) && (success < nb); i++){
 		int file;
-		char* port = (char*) calloc(strlen(name)+1, sizeof(char));
+		char port[10];
 		sprintf(port, "%s%d", name, i);
 		file = open_s(port, 0);
 		if(file != -1){
 			tempArduino[success] = file;
 			success++;
 		}
-		free(port);
-		
-			port = (char*) calloc(strlen(name2)+1, sizeof(char));
-                	sprintf(port, "%s%d", name2, i);
-                	file = open_s(port, 1);
+		//free(port);
+		char port2[10];
+                	sprintf(port2, "%s%d", name2, i);
+                	file = open_s(port2, 1);
                 	if(file != -1){
                         	tempArduino[success] = file;
                 	        success++;
         	        }
-	                free(port);
+	                //free(port);
 
 
 	}
