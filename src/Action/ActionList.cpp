@@ -6,7 +6,7 @@ int getSensorValue(Data* data){
 	read_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) buffer, 150);
 	char* correction = readCorrection(buffer);
 	int result = atoi(correction);
-	free(correction);
+	//free(correction);
 	return result;
 }
 
@@ -16,7 +16,7 @@ int getDistanceValue(Data* data){
 	read_s(data->arduino[INTERN_ARDUINO], (uint8_t*) buffer, 150);
 	char* correction = readCorrection(buffer);
 	int result = atoi(correction);
-	free(correction);
+	//free(correction);
 	return result;
 }
 
@@ -39,7 +39,7 @@ void ActionMove::perform(){
 		int currentPulse = getDistanceValue(this->data);
 		int distanceAFaire = this->distance - (this->initPulse - currentPulse);
 
-		if(obstacle < 20){
+		if(obstacle < 30){
 			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
 		}
 		else{
@@ -79,10 +79,10 @@ void ActionTurn::perform(){
     }
     else{
     	int currentPulse = getDistanceValue(this->data);
-		int angleAFaire = this->degree - (this->initPulse - currentPulse);
+		int angleAFaire = this->degree - abs(this->initPulse - currentPulse);
         
         if(direction == 0){
-            if(angleAFaire < 0){
+            if(angleAFaire > 0){
                 write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
             }
             else{
@@ -113,8 +113,9 @@ void ActionPince::perform(){
 	else{
 		write_s(data->arduino[EXTERN_ARDUINO], (uint8_t*) "c", 1);
 	}
+	this->finished = true;
 }
 
 void ActionImage::perform(){
-
+	this->finished = true;
 }

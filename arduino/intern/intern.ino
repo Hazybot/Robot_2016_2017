@@ -32,21 +32,21 @@ int pulse1 = 0;
 int pulse2 = 0;
 int pulse3 = 0;
 
-int calculDistanceAvance(int tilt){
-    return 80*tilt/350;
+long calculDistanceAvance(long tilt){
+    return 80*((double) tilt)/350;
 }
-int calculDistanceRecule(int tilt){
-    return 80*tilt/350;
+long calculDistanceRecule(long tilt){
+    return 80*((double) tilt)/350;
 }
-int calculDistanceTourne(int tilt){
-    return 80*tilt/350;
+long calculDistanceTourne(long tilt){
+    return 80*((float) tilt)/350;
 }
 
-int mouvement(int tilt1,int tilt2,int tilt3){
-    int tiltAction1 = tilt1-pulse1;
-    int tiltAction2 = tilt2-pulse2;
-    int tiltAction3 = tilt3-pulse3;
-    int valeur;
+long mouvement(long tilt1,long tilt2,long tilt3){
+    long tiltAction1 = tilt1-pulse1;
+    long tiltAction2 = tilt2-pulse2;
+    long tiltAction3 = tilt3-pulse3;
+    long valeur;
     if(tiltAction1 < 0 && tiltAction2 < 0 && tiltAction3 < 0 ){
         valeur = calculDistanceTourne((tiltAction1 + tiltAction2 + tiltAction3)/3);
     }
@@ -64,7 +64,7 @@ int mouvement(int tilt1,int tilt2,int tilt3){
 
 void getDistance(){
     char s[150];
-    sprintf(s, "#%d!", mouvement(wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse()));
+    sprintf(s, "#%ld!", mouvement(wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse()));
     Serial.print(s);
 }
 

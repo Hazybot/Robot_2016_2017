@@ -16,11 +16,14 @@ void launchLoop(Data* data, Timer* timer, ActionRobot** actions, int nbActions){
 	read_s(data->arduino[EXTERN_ARDUINO], (uint8_t *) buffer, 1);
 	pthread_create(&timerThread, NULL, launchTimer, timer);
 	while(!timer->end){
-		if(actions[actualAction]->isFinished()){
-			actualAction++;
-		}
-		else{
-			actions[actualAction]->perform();
+		if(actualAction < nbActions){
+
+			if(actions[actualAction]->isFinished()){
+				actualAction++;
+			}
+			else{
+				actions[actualAction]->perform();
+			}
 		}
 		usleep(20000);
 	}

@@ -105,6 +105,7 @@ void setup() {
    funnyActionServo.attach(11);
    funnyActionServo.write(INITIAL_FUNNY);
    fermeturePince();
+   rotateToVertical();
 }
 
 void loop() {

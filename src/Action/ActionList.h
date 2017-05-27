@@ -15,6 +15,7 @@ class ActionMove : public ActionRobot {
 		double distance;
 		int direction;
 		int initPulse;
+		bool finished;
 	
 	public:
 		//distance in centimeter, direction positive for forward, negative for backward
@@ -23,8 +24,12 @@ class ActionMove : public ActionRobot {
 			this->direction = direction;
 			this->firstTime = true;
 			this->initPulse = 0;
+			this->finished = false;
 		}
 		void perform();
+		bool isFinished(){
+			return this->finished;
+		}
 };
 
 class ActionTurn : public ActionRobot {
@@ -34,6 +39,7 @@ class ActionTurn : public ActionRobot {
 		double degree;
 		int direction;
 		int initPulse;
+		bool finished;
 	
 	public:
 		//degree in degree, direction positive for forward, negative for backward
@@ -42,34 +48,48 @@ class ActionTurn : public ActionRobot {
 			this->direction = direction;
 			this->firstTime = true;
 			this->initPulse = 0;
+			this->finished = false;
 		}
 		void perform();
+		bool isFinished(){
+			return this->finished;
+		}
 };
 
 class ActionPince : public ActionRobot {
 	
 	private:
 		bool open;
+		bool finished;
 	
 	public:
 		//open if true, close if false
 		ActionPince(Data* data, bool open): ActionRobot(data){
 			this->open = open;
+			this->finished = false;
 		}
 		void perform();
+		bool isFinished(){
+			return this->finished;
+		}
 };
 
 class ActionImage : public ActionRobot {
 	
 	private:
 		bool open;
+		bool finished;
 	
 	public:
 		//open if true, close if false
 		ActionImage(): ActionRobot(NULL){
 			this->open = open;
+			this->finished = false;
 		}
 		void perform();
+		bool isFinished(){
+			return this->finished;
+		}
 };
 
 #endif
