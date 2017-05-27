@@ -1,4 +1,4 @@
-*#include "ActionList.h"
+#include "ActionList.h"
 
 int getSensorValue(Data* data){
 	char buffer[150];
@@ -63,11 +63,11 @@ void ActionMove::perform(){
 }
 
 void ActionTurn::perform(){
-    if(firtTime){
-        if(distance == 0){
+    if(firstTime){
+        if(direction == 0){
             write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
         }
-        else if(distance == 1){
+        else if(direction == 1){
             write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "r", 1);
         }
         else{
@@ -80,13 +80,13 @@ void ActionTurn::perform(){
 			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);
 		}
         else{
-            if(distance == 0){
-                if(degree-getDistanceValue() < 0){
+            if(direction == 0){
+                if(degree-getDistanceValue(this->data) < 0){
                     write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
                 }
-            )
-            else if(distance == 1){
-                if(degree-getDistanceValue() > 0){
+            }
+            else if(direction == 1){
+                if(degree-getDistanceValue(this->data) > 0){
                     write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "l", 1);
                 }
             }

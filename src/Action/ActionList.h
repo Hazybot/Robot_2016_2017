@@ -3,6 +3,7 @@
 
 #include "ActionRobot.h"
 #include "../serial/Serial.h"
+#include "../data/Data.h"
 
 int getSensorValue(Data* data);
 int getDistanceValue(Data* data);
@@ -29,6 +30,7 @@ class ActionMove : public ActionRobot {
 class ActionTurn : public ActionRobot {
 	
 	private:
+		bool firstTime;
 		double degree;
 		int direction;
 	
