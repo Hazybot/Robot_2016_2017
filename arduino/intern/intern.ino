@@ -68,18 +68,6 @@ void getDistance(){
     Serial.print(s);
 }
 
-void getAngle(){
-     char s[150];
-     sprintf(s, "#%d!", mouvement(wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse()));
-     Serial.print(s); 
-}
-
-void getPulses(){
-	char s[150];
-	sprintf(s, "#%d-%d-%d!", wheel1.getCurrPulse(), wheel2.getCurrPulse(), wheel3.getCurrPulse());
-	Serial.print(s);
-}
-
 void forward(){
 	Omni.setCarAdvance(200);
 }
@@ -167,7 +155,7 @@ void loop() {
 				sonar();
 				break;
 			case 'p':
-				getPulses();
+				getDistance();
 				break;
 		}
 	}

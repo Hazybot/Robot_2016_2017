@@ -1,17 +1,17 @@
 #include "SerialTraitment.h"
 
+#include <iostream>
+
 using namespace std;
 
 int openArduino(int* arduino, int nb){
-	const char* name = string("/dev/ttyACM").c_str();
-	const char* name2 = string("/dev/ttyUSB").c_str();
 	int* tempArduino = (int*) calloc(nb, sizeof(int));
 	int i;
 	int success = 0;
 	for(i = 0; (i < 10) && (success < nb); i++){
 		int file;
 		char port[10];
-		sprintf(port, "%s%d", name, i);
+		sprintf(port, "/dev/ttyACM%d", i);
 		file = open_s(port, 0);
 		if(file != -1){
 			tempArduino[success] = file;
@@ -19,8 +19,8 @@ int openArduino(int* arduino, int nb){
 		}
 		//free(port);
 		char port2[10];
-                	sprintf(port2, "%s%d", name2, i);
-                	file = open_s(port2, 1);
+                	sprintf(port2, "/dev/ttyUSB%d", i);
+			file = open_s(port2, 1);
                 	if(file != -1){
                         	tempArduino[success] = file;
                 	        success++;
