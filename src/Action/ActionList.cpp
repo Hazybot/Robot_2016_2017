@@ -22,7 +22,7 @@ int getDistanceValue(Data* data){
 
 void ActionMove::perform(){
 	if(firstTime){
-		this.initPulse = getDistanceValue(this->data);
+		this->initPulse = getDistanceValue(this->data);
 		if(direction == 1){
 			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "f", 1);
 		}
@@ -37,7 +37,7 @@ void ActionMove::perform(){
 	else{
 		int obstacle = getSensorValue(this->data);
 		int currentPulse = getDistanceValue(this->data);
-		distanceAFaire = this.distance - (this.initPulse - currentPulse);
+		int distanceAFaire = this->distance - (this->initPulse - currentPulse);
 		
 		if(obstacle < 20){
 			write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "b", 1);	
@@ -56,7 +56,7 @@ void ActionMove::perform(){
 			}
 			else{
 				write_s(data->arduino[INTERN_ARDUINO], (uint8_t*) "s", 1);
-				this.finished = true;
+				this->finished = true;
 			}
 		}
 	}
